@@ -1,0 +1,38 @@
+
+;" Display a multi-line text string with tab handling
+   final debugged version"
+<DEFINE SWTXT3 (STR  ;"INPUT TEXT STRING"
+	            "OPT" (X 0) (Y 500) (SP 12)	
+	            "AUX" (LX .X) (LY .Y) (YSP 25) (CCHRP 1))
+	#DECL ((STR) STRING (X Y SP YSP CCHRP) FIX (VALUE) ATOM)
+	<REPEAT ((S .X) (T .Y) (ST .STR) CHR)
+		#DECL ((S T)FIX (ST) STRING (CHR) CHARACTER)
+		<COND (<EMPTY? .ST> <RETURN ,NULL>)
+		      (T <SET CHR <1 .ST>>)>
+		<COND (<==? .CHR <ASCII 13>> 						;" CR HANDLER "
+			   <SET CCHRP 1> <SET S .LX>) 	;"RESET TO BEGINNING OF LINE"
+		      (<==? .CHR <ASCII 10>> <SET T <- .T .YSP>>)	;" LF HANDLER"
+		      (<==? .CHR <ASCII 09>>			    		;" TAB HANDLER"
+		       ;<SET CCHRP <+ .CCHRP <TB2SP .CCHRP>>>	
+		       <SET CCHRP <TABPOS .CCHRP>>				;" INC BY n SPACES"
+		       <SET S <+ .X  <* .SP .CCHRP>> >) 		;" CALC NEW X POS"
+		      (T <CHARGE .CHR .S .T>		;"DRAW CHAR & INC X POSITION,"
+		         <SET S <+ .S .SP>>)>		;"ONLY IF CHAR ISN'T SPECIAL"
+		<SET CCHRP <+ .CCHRP 1>>; " INC CHAR COUNT ON THE LINE "
+		<COND (<G? .S 1000> <SET S .X> <SET T <- .T .YSP>>)>
+		<SET ST <REST .ST>> >>
+
+;" SPCTAB IS THE NUMBER OF SPACES PER TAB "
+<SETG SPCTAB 8>	
+
+;" CALULATE THE NUMBER OF SPACES NEEDED TO THE NEXT TAB POSITION "
+<DEFINE TB2SP (CRP "AUX" (SPCTAB ,SPCTAB) NSP) 
+			  #DECL((VALUE SPCTAB CRP NSP) FIX)
+			  <SET NSP <- .SPCTAB <MOD .CRP ,SPCTAB>>>>
+
+;" CALAULATE THE NEXT TAB POSITION FROM THE CURRENT LINE POSITION "
+<DEFINE TABPOS (CRP) 
+		#DECL((VALUE CRP) FIX)
+		<+ .CRP <TB2SP .CRP>>>
+
+

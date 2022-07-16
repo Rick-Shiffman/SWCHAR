@@ -1,0 +1,19 @@
+<SETG STRDEMO "
+	____________________________________
+		A Long Long Time Ago
+
+	On a PDP10 far far away at MIT-DMCG...
+
+		There was ITS 
+
+	 Giving rise to Muddle, MIGS and
+
+		     Zork
+
+	____________________________________
+">
+
+<PICT STRDEMO()  <SWTXT3 ,STRDEMO 100 500>>
+<PICT STRDEMO2() <CALL STRDEMO <XLATE -300 -250> <SCALE 2> <XLATE 300 200> >>  
+
+<DISP STRDEMO2>

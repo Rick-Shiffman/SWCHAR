@@ -9,12 +9,12 @@
 		#DECL ((S T)FIX (ST) STRING (CHR) CHARACTER)
 		<COND (<EMPTY? .ST> <RETURN ,NULL>)
 		      (T <SET CHR <1 .ST>>)>
-		<COND (<==? .CHR <ASCII 13>> 						;" CR HANDLER "
+		<COND (<==? .CHR <ASCII 13>> 				;" CR HANDLER "
 			   <SET CCHRP 1> <SET S .LX>) 	;"RESET TO BEGINNING OF LINE"
 		      (<==? .CHR <ASCII 10>> <SET T <- .T .YSP>>)	;" LF HANDLER"
-		      (<==? .CHR <ASCII 09>>			    		;" TAB HANDLER"
+		      (<==? .CHR <ASCII 09>>			    	;" TAB HANDLER"
 		       ;<SET CCHRP <+ .CCHRP <TB2SP .CCHRP>>>	
-		       <SET CCHRP <TABPOS .CCHRP>>				;" INC BY n SPACES"
+		       <SET CCHRP <TABPOS .CCHRP>>			;" INC BY n SPACES"
 		       <SET S <+ .X  <* .SP .CCHRP>> >) 		;" CALC NEW X POS"
 		      (T <CHARGE .CHR .S .T>		;"DRAW CHAR & INC X POSITION,"
 		         <SET S <+ .S .SP>>)>		;"ONLY IF CHAR ISN'T SPECIAL"

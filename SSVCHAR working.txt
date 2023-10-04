@@ -10,7 +10,7 @@
    In display increment mode 'E' is increment mode, D a dark vector or 
    relative move, 'B' is a bright vector or relative draw, and 'X' or 'F'
    is the escape from increment mode. After the 'D" or 'B' the first digit
-   is the x increment and the second digit iOS the y increment. I the digit
+   is the x increment and the second digit is the y increment. I the digit
    is prefixed with a 'M' its a negative increment. There are two complete
    x, y increments in each 'INC' instruction. The increments can range from 0
    to plus or minus 3 in value.
